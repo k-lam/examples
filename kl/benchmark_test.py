@@ -41,8 +41,8 @@ def main():
             transforms.ToTensor(),
             normalize,
         ])),
-        batch_size=args.batch_size, shuffle=False,
-        num_workers=args.workers, pin_memory=True)
+        batch_size=1, shuffle=False,
+        num_workers=4, pin_memory=True)
 
     model = models.__dict__[args.arch]
     checkpoint = torch.load(args.arch+'.ckpt')
