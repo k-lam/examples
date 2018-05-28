@@ -53,14 +53,14 @@ def main():
     # cpu mode
     count = len(val_loader)
 
-    # total = 0
-    # for i, (input, target) in enumerate(val_loader):
-    #     # print i, '-----------------------------'
-    #     s = time.time()
-    #     model(input)
-    #     e = time.time()
-    #     total += (e - s)
-    # print 'cpu mode: total cost:', total, 'image count:', count, 'avg:', total / count
+    total = 0
+    for i, (input, target) in enumerate(val_loader):
+        # print i, '-----------------------------'
+        s = time.time()
+        model(input)
+        e = time.time()
+        total += (e - s)
+    print 'cpu mode: total cost:', total, 'image count:', count, 'avg:', total / count
 
     model.cuda()
     total = 0
