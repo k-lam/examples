@@ -2,7 +2,7 @@ import argparse
 import os
 import shutil
 import time
-
+import torchvision
 import torch
 import torch.nn as nn
 import torch.nn.parallel
@@ -14,6 +14,8 @@ import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
+
+print torchvision.__version__
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -44,8 +46,10 @@ def main():
         batch_size=1, shuffle=False,
         num_workers=4, pin_memory=True)
 
-    model = models.__dict__[args.arch]
+    model = models.__dict__[args.arch]()
     checkpoint = torch.load(args.arch+'.ckpt')
+    for key, value in checkpoint.iteritems():
+        print key, value
     model.load_state_dict(checkpoint['state_dict'])
     model.cuda()
     model.eval()
