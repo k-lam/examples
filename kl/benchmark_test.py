@@ -50,9 +50,19 @@ def main():
     # checkpoint = torch.load(args.arch+'.ckpt')
     # model.load_state_dict(checkpoint['state_dict'])
     model = models.__dict__[args.arch](True)
-    model.cuda()
     model.eval()
+
+    # cpu mode
     count = len(val_loader)
+    total = 0
+    for i, (input, target) in enumerate(val_loader):
+        print i, '-----------------------------'
+        s = time.time()
+        model(input)
+        e = time.time()
+        total += (e - s)
+    print 'cpu mode: total cost:', total, 'image count:', len, 'avg:', total / count
+    model.cuda()
     total = 0
     for i, (input, target) in enumerate(val_loader):
         print i, '-----------------------------'
@@ -61,7 +71,7 @@ def main():
         model(input)
         e = time.time()
         total += (e-s)
-    print 'total cost:', total, 'image count:', len, 'avg:', total / count
+    print 'gpu mode: total cost:', total, 'image count:', len, 'avg:', total / count
 
 if __name__ == '__main__':
     main()
