@@ -51,27 +51,29 @@ def main():
     # model.load_state_dict(checkpoint['state_dict'])
     model = models.__dict__[args.arch](True)
     model.eval()
-
+    print args.arch
     # cpu mode
     count = len(val_loader)
-    total = 0
-    for i, (input, target) in enumerate(val_loader):
-        print i, '-----------------------------'
-        s = time.time()
-        model(input)
-        e = time.time()
-        total += (e - s)
-    print 'cpu mode: total cost:', total, 'image count:', len, 'avg:', total / count
+
+    # total = 0
+    # for i, (input, target) in enumerate(val_loader):
+    #     # print i, '-----------------------------'
+    #     s = time.time()
+    #     model(input)
+    #     e = time.time()
+    #     total += (e - s)
+    # print 'cpu mode: total cost:', total, 'image count:', count, 'avg:', total / count
+
     model.cuda()
     total = 0
     for i, (input, target) in enumerate(val_loader):
-        print i, '-----------------------------'
+        # print i, '-----------------------------'
         s = time.time()
         input = input.cuda()
         model(input)
         e = time.time()
         total += (e-s)
-    print 'gpu mode: total cost:', total, 'image count:', len, 'avg:', total / count
+    print 'gpu mode: total cost:', total, 'image count:', count, 'avg:', total / count
 
 if __name__ == '__main__':
     main()
