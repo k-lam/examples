@@ -44,9 +44,10 @@ def main():
         batch_size=1, shuffle=False,
         num_workers=4, pin_memory=True)
 
-    model = models.__dict__[args.arch]
-    checkpoint = torch.load(args.arch+'.ckpt')
-    model.load_state_dict(checkpoint['state_dict'])
+
+    # checkpoint = torch.load(args.arch+'.ckpt')
+    # model.load_state_dict(checkpoint['state_dict'])
+    model = models.__dict__[args.arch](True)
     model.cuda()
     model.eval()
     count = len(val_loader)
