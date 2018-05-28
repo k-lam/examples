@@ -49,11 +49,14 @@ def main():
     model.load_state_dict(checkpoint['state_dict'])
     model.cuda()
     model.eval()
+    count = len(val_loader)
     s = time.time()
-    len = len(val_loader)
     for i, (input, target) in enumerate(val_loader):
         print i, '-----------------------------'
         model(input)
     e = time.time()
 
-    print 'total cost:', e - s, 'image count:', len, 'avg:', (e - s) / len
+    print 'total cost:', e - s, 'image count:', len, 'avg:', (e - s) / count
+
+if __name__ == '__main__':
+    main()
