@@ -14,6 +14,7 @@ import torch.utils.data.distributed
 import torchvision.transforms as transforms
 import torchvision.datasets as datasets
 import torchvision.models as models
+from torch.autograd import Variable
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -57,6 +58,7 @@ def main():
     for i, (input, target) in enumerate(val_loader):
         # print i, '-----------------------------'
         s = time.time()
+        input = Variable(input)
         model(input)
         e = time.time()
         total += (e - s)
@@ -67,6 +69,7 @@ def main():
     for i, (input, target) in enumerate(val_loader):
         # print i, '-----------------------------'
         s = time.time()
+        input = Variable(input)
         input = input.cuda()
         model(input)
         e = time.time()
